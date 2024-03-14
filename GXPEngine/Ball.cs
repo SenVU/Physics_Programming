@@ -71,7 +71,7 @@ public class Ball : EasyDraw
 
         Vec2 desiredVelocity = mouseVec - _position;
 
-        velocity = velocity * .99f + desiredVelocity * .01f;
+        velocity.Lerp(desiredVelocity, .01f);
 
         _speed += speedIncrease * Time.deltaTime;
 

@@ -1,8 +1,5 @@
-using GXPEngine;                                // GXPEngine contains the engine
-using TiledMapParser;
-using System.Collections.Generic;
-using System;
-using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
+using GXPEngine;
+using System.Drawing;
 
 public class MyGame : Game
 {
@@ -20,7 +17,7 @@ public class MyGame : Game
 
     public bool gameOver = false;
 
-    public MyGame() : base(800, 600, false, false)
+    public MyGame() : base(800, 600, false)
     {
         _ball = new Ball(30, new Vec2(width / 2, height / 2));
         AddChild(_ball);
@@ -28,6 +25,8 @@ public class MyGame : Game
         _text = new EasyDraw(150, 40);
         _text.TextAlign(CenterMode.Center, CenterMode.Center);
         AddChild(_text);
+
+        Vec2.UnitTest();
     }
 
     void Update()
