@@ -33,3 +33,10 @@ C:\Users\sen\Desktop\GIT\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\
 C:\Users\sen\Desktop\GIT\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\sen\Desktop\GIT\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.exe
 C:\Users\sen\Desktop\GIT\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\bin\Debug\GXPEngine.exe.config
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.csproj.AssemblyReference.cache
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\sen\Desktop\GitKraken\Physics_Programming\Final Game (vec2 V3)\GXPEngine\obj\x86\Debug\GXPEngine.pdb

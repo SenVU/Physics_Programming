@@ -1,5 +1,4 @@
 ﻿using GXPEngine;
-using GXPEngine.Core;
 using System;
 
 public struct Vec2
@@ -13,15 +12,9 @@ public struct Vec2
         this.y = pY;
     }
 
-    public Vec2(float pXY)
-    {
-        this.x = pXY;
-        this.y = pXY; 
-    }
-
     // --------operators
     public static Vec2 operator *(Vec2 left, Vec2 right) => new Vec2(left.x * right.x, left.y * right.y);
-    public static Vec2 operator *(Vec2 left, float right) => left * new Vec2(right);
+    public static Vec2 operator *(Vec2 left, float right) => left * new Vec2(right, right);
     public static Vec2 operator *(float left, Vec2 right) => right*left;
     public static Vec2 operator /(Vec2 left, Vec2 right) => new Vec2(left.x / right.x, left.y / right.y);
     public static Vec2 operator /(Vec2 left, float right) => new Vec2(left.x / right, left.y / right);
@@ -102,15 +95,21 @@ public struct Vec2
     }
 
     /// <summary>
-    /// Gets the unit vector normal of the given vector
+    /// Gets the unit normal vector of the given vector
     /// </summary>
-    /// <returns>Unit vector normal</returns>
+    /// <returns>Unit normal vector</returns>
     public Vec2 Normal()
     {
-        Vec2 returnNormal = this;
-        returnNormal.RotateDegrees(90);
-        returnNormal.Normalize();
-        return returnNormal;
+        return new Vec2(-y, x).Normalized();
+    }
+
+    /// <summary>
+    /// Returns the distance from this vector to another
+    /// </summary>
+    /// <param name="pOtherVec">The other point to check.</param>
+    public float distance(Vec2 pOtherVec)
+    {
+        return (pOtherVec - this).Length();
     }
 
 
@@ -275,11 +274,11 @@ public struct Vec2
         Console.WriteLine("180 deg in rad:" + Vec2.Deg2Rad(180));
         Console.WriteLine("1 rad in deg:" + Vec2.Rad2Deg(1));
 
-        Vec2 testVec = Vec2.GetUnitVectorDeg(45);
+        Vec2 testVec = Vec2.GetUnitVectorDeg(270);
         Vec2 testVec2 = Vec2.GetUnitVectorRad(2);
         Vec2 testVec3 = Vec2.RandomUnitVector();
 
-        Console.WriteLine("The unit vector for deg angle 45 :" + testVec + "-length:" + testVec.Length() + "-deg:" + testVec.GetAngleDegrees());
+        Console.WriteLine("The unit vector for deg angle 270 :" + testVec + "-length:" + testVec.Length() + "-deg:" + testVec.GetAngleDegrees());
         Console.WriteLine("The unit vector for rad angle 2 :" + testVec2 + "-length:" + testVec2.Length() + "-rad:" + testVec2.GetAngleRadians());
         Console.WriteLine("A random unit vector:" + testVec3 + "-length:" + testVec3.Length() + "-deg:" + testVec3.GetAngleDegrees());
 
@@ -289,16 +288,16 @@ public struct Vec2
         testVec3 = testVec;
         testVec3.RotateRadians(1);
 
-        Console.WriteLine("the vector " + testVec + "-deg:" + testVec.GetAngleDegrees() + " rotated by 45 deg :" + testVec2 + "-deg:" + testVec2.GetAngleDegrees());
-        Console.WriteLine("the vector " + testVec + "-rad:" + testVec.GetAngleRadians() + " rotated by 1 rad :" + testVec3 + "-deg:" + testVec3.GetAngleRadians());
+        Console.WriteLine("the vector " + testVec + "-length:" + testVec.Length() + "-deg:" + testVec.GetAngleDegrees() + " rotated by 45 deg :" + testVec2 + "-length:" + testVec2.Length() + "-deg:" + testVec2.GetAngleDegrees());
+        Console.WriteLine("the vector " + testVec + "-length:" + testVec.Length() + "-rad:" + testVec.GetAngleRadians() + " rotated by 1 rad :" + testVec3 + "-length:" + testVec3.Length() + "-deg:" + testVec3.GetAngleRadians());
 
         testVec2 = testVec;
         testVec2.SetAngleDegrees(70);
         testVec3 = testVec;
         testVec3.SetAngleRadians(2);
 
-        Console.WriteLine("the vector " + testVec + " set to 70 deg :" + testVec2 + "-deg:" + testVec2.GetAngleDegrees());
-        Console.WriteLine("the vector " + testVec + " set to 2 rad :" + testVec3 + "-rad:" + testVec3.GetAngleRadians());
+        Console.WriteLine("the vector " + testVec + "-length:" + testVec.Length() + " set to 70 deg :" + testVec2 + "-length:" + testVec2.Length() + "-deg:" + testVec2.GetAngleDegrees());
+        Console.WriteLine("the vector " + testVec + "-length:" + testVec.Length() + " set to 2 rad :" + testVec3 + "-length:" + testVec3.Length() + "-rad:" + testVec3.GetAngleRadians());
 
         Vec2 rotatePoint = new Vec2(2, 6);
         testVec2 = testVec;
@@ -308,6 +307,13 @@ public struct Vec2
 
         Console.WriteLine("the vector " + testVec + " rotated around :" + rotatePoint + " by 90 deg" + testVec2);
         Console.WriteLine("the vector " + testVec + " rotated around :" + rotatePoint + " by 2 rad" + testVec3);
+
+        Console.WriteLine("the normalized version of vector " + testVec + "is :" + testVec.Normalized());
+        Console.WriteLine("the unit normal of vector " + testVec + "is :" + testVec.Normal());
+
+        Vec2 reflectionNormal = Vec2.GetUnitVectorDeg(30);
+
+        Console.WriteLine("the vector " + testVec + "reflected off of the normal:" + reflectionNormal + "is :"+ testVec2);
 
     }
 }

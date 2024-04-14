@@ -1,16 +1,16 @@
 ﻿using GXPEngine;
+using System.Collections.Generic;
 
 public class HoverCraft : EasyDraw
 {
-    public Vec2 _position;
-    public Vec2 _velocity;
+    public Vec2BallCollider _collider;
     public Vec2 vecRotation = Vec2.GetUnitVectorRad(0);
 
-    Vec2 oldPos; // the position at the start of the step used for collision handeling
+    public CheckPoint lastCheckPoint;
 
-    float maxSpeed = 5;
-    float StationaryRotationSpeed = 0.2f;
-    float rotationSpeed = 0.8f;
+    float maxSpeed = 18;
+    float StationaryRotationSpeed = 0.7f;
+    float rotationSpeed = 2f;
 
     float inputGas;
     float inputSteering;
@@ -21,9 +21,13 @@ public class HoverCraft : EasyDraw
     {
         radius = pRadius;
         SetOrigin(radius, radius);
+
+        _collider = new Vec2BallCollider(radius);
+
+        AddChild(_collider);
     }
 
-    void draw()
+    void Draw()
     {
         Fill(255, 255, 255);
         StrokeWeight(1);
@@ -38,38 +42,60 @@ public class HoverCraft : EasyDraw
         inputSteering = steering;
     }
 
+    public void Input(List<CheckPoint> checkPoints)
+    {
+        // AI code
+        int nextIndex = checkPoints.IndexOf(lastCheckPoint) + 1;
+        if (nextIndex >= checkPoints.Count) { nextIndex = 0; }
+        CheckPoint nextCheckpoint = checkPoints[nextIndex];
+
+        Vec2 VecTargetAngle = (nextCheckpoint._position - this._collider._position).Normalized();
+
+        VecTargetAngle.RotateDegrees(90);
+
+        float targetAngle = VecTargetAngle.GetAngleDegrees();
+        float angle = vecRotation.GetAngleDegrees();
+
+        float angleDifference = targetAngle - angle;
+
+        if (angleDifference > 180)
+        {
+            angleDifference -= 360;
+        }
+        else if (angleDifference < -180)
+        {
+            angleDifference += 360;
+        }
+
+        inputSteering = angleDifference / 5;
+
+        inputSteering = Mathf.Clamp(inputSteering, -1, 1);
+
+        inputGas = 1;
+    }
+
     void VelocityControl()
     {
         Vec2 targetVelocity = vecRotation;
         targetVelocity.RotateDegrees(-90);
         targetVelocity.SetLength(inputGas * maxSpeed);
 
-        _velocity.Lerp(targetVelocity, 0.01f);
+        _collider._velocity.Lerp(targetVelocity, 0.01f);
     }
 
-    void UpdateScreenPosition() 
+    public void UpdateScreenPosition() 
     { 
-        x=_position.x; y=_position.y;
+        x=_collider._position.x; y= _collider._position.y;
         rotation= vecRotation.GetAngleDegrees();
-    }
-
-    void checkCollisions()
-    {
-
+        Draw();
     }
 
     public void Step()
     {
         // rotation speed is calculated for both stationary and moving at the same time
-        vecRotation.RotateDegrees((inputSteering * StationaryRotationSpeed * (inputGas<0?-1:1)) + (inputSteering * (rotationSpeed-StationaryRotationSpeed) * inputGas)); 
+        vecRotation.RotateDegrees((inputSteering * StationaryRotationSpeed /* * (inputGas<0?-1:1))*/ + (inputSteering * (rotationSpeed-StationaryRotationSpeed) * (_collider._velocity.Length()/maxSpeed) /* * (inputGas<0?-1:1)*/))); 
         VelocityControl();
-        oldPos = _position;
-        _position += _velocity;
-
-        checkCollisions();
-
-        UpdateScreenPosition();
-        draw();
+        _collider._position += _collider._velocity;
     }
 }
 

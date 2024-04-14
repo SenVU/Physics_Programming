@@ -17,10 +17,11 @@ public class PlayerCamera : Camera
         rotation = vecRotation.GetAngleDegrees();
     }
 
-    public void Step()
+    public void Step(bool rotation = true)
     {
-        _position.Lerp(followCraft._position+(followCraft._velocity*40), 0.05f);
-        vecRotation.Lerp(followCraft.vecRotation, 0.03f);
+        _position.Lerp(followCraft._collider._position+(followCraft._collider._velocity *10), 0.2f);
+        if (rotation) vecRotation.Lerp(followCraft.vecRotation, 0.06f);
+        else vecRotation = Vec2.GetUnitVectorDeg(0);
 
         UpdateScreenPosition();
     }

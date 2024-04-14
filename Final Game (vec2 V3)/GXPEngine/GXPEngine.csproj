@@ -42,8 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HoverCraft.cs" />
+    <Compile Include="Physics\Vec2Collider.cs" />
+    <Compile Include="Physics\Vec2ColliderManager.cs" />
+    <Compile Include="Physics\Colliders\Vec2BallCollider.cs" />
+    <Compile Include="Physics\Colliders\Vec2LineCollider.cs" />
     <Compile Include="PlayerCamera.cs" />
-    <Compile Include="Vec2\Physics_engine.cs" />
+    <Compile Include="Physics\Vec2PhysicsCalculations.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
@@ -86,6 +90,8 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Vec2\Vec2.cs" />
+    <Compile Include="CheckPoint.cs" />
+    <Compile Include="WallSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
